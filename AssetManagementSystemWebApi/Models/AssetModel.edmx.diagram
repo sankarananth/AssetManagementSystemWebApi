@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c999237933e54487b989abb462f3fa33" Name="Diagram1">
+        <EntityTypeShape EntityType="assetDBModel.tblAssetDef" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="assetDBModel.tblAssetMaster" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="assetDBModel.tblAssetType" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="assetDBModel.tbllogin" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="assetDBModel.tblPurchaseOrder" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="assetDBModel.tbluser" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="assetDBModel.tblVendorCreation" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="assetDBModel.FK__tblAssetD__ad_ty__2FCF1A8A" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tblAssetM__am_ad__3C34F16F" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tblPurcha__pd_ad__3587F3E0" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tblAssetM__am_at__3A4CA8FD" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tblAssetM__am_ma__3B40CD36" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tblPurcha__pd_ty__367C1819" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tblVendor__vd_ty__32AB8735" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tbluser__u_id__2B0A656D" ManuallyRouted="false" />
+        <AssociationConnector Association="assetDBModel.FK__tblPurcha__pd_ve__37703C52" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
