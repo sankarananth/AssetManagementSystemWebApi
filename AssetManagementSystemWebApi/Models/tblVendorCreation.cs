@@ -26,8 +26,19 @@ namespace AssetManagementSystemWebApi.Models
         public string vd_type { get; set; }
         public Nullable<decimal> vd_type_id { get; set; }
         public System.DateTime vd_from { get; set; }
-        public System.DateTime vd_to { get; set; }
-        public string vd_addr { get; set; }
+		public string vFrom 
+		{
+			get {
+				return vd_from.ToString("yyyy-MM-dd");
+				}
+	    }
+		public System.DateTime vd_to { get; set; }
+		public string vTo 
+        { 
+           get {return vd_to.ToString("yyyy-MM-dd");
+			} 
+         }
+		public string vd_addr { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblAssetMaster> tblAssetMasters { get; set; }
