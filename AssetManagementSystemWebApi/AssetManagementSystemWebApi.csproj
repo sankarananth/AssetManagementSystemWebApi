@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AssetDefsController.cs" />
     <Compile Include="Controllers\AssetTypeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -191,6 +192,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssetModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PurchaseViewModel.cs" />
     <Compile Include="Models\tblAssetDef.cs">
       <DependentUpon>AssetModel.tt</DependentUpon>
     </Compile>

@@ -98,7 +98,7 @@ namespace AssetManagementSystemWebApi.Controllers
 
         // DELETE: api/Vendor/5
         [ResponseType(typeof(tblVendorCreation))]
-        public IHttpActionResult DeletetblVendorCreation(decimal id)
+        public IHttpActionResult DeletetblVendorCreation(int id)
         {
             tblVendorCreation tblVendorCreation = db.tblVendorCreations.Find(id);
             if (tblVendorCreation == null)
@@ -111,6 +111,12 @@ namespace AssetManagementSystemWebApi.Controllers
 
             return Ok(tblVendorCreation);
         }
+		public int Get(string name)
+		{
+			List<tblVendorCreation> vendorList=db.tblVendorCreations.Where(x => x.vd_name.Contains(name)).ToList();
+			int count = vendorList.Count;
+			return count;
+		}
 
         protected override void Dispose(bool disposing)
         {

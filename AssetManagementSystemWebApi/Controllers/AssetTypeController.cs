@@ -12,6 +12,10 @@ namespace AssetManagementSystemWebApi.Controllers
     {
 		private assetDBEntities db = new assetDBEntities();
 
+		public AssetTypeController()
+		{
+			db.Configuration.ProxyCreationEnabled = false;
+		}
 		// GET: api/Assettypes
 		public IQueryable<tblAssetType> GetAssettypes()
 		{

@@ -20,8 +20,8 @@ namespace AssetManagementSystemWebApi.Models
         public Nullable<decimal> pd_type_id { get; set; }
         public Nullable<decimal> pd_qty { get; set; }
         public Nullable<decimal> pd_vendor_id { get; set; }
-        public Nullable<System.DateTime> pd_odate { get; set; }
-        public Nullable<System.DateTime> pd_ddate { get; set; }
+        public System.DateTime pd_odate { get; set; }
+        public System.DateTime pd_ddate { get; set; }
         public string pd_status { get; set; }
     
         public virtual tblAssetDef tblAssetDef { get; set; }
