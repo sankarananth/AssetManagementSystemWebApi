@@ -18,6 +18,7 @@ namespace AssetManagementSystemWebApi
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+			log4net.Config.XmlConfigurator.Configure();
 		}
 	}
 }

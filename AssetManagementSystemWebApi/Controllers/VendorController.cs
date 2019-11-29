@@ -8,13 +8,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using log4net;
 using AssetManagementSystemWebApi.Models;
 
 namespace AssetManagementSystemWebApi.Controllers
 {
     public class VendorController : ApiController
     {
-        private assetDBEntities db = new assetDBEntities();
+		private static readonly ILog Log = LogManager.GetLogger(typeof(VendorController));
+		private assetDBEntities db = new assetDBEntities();
 
         // GET: api/Vendor
         public List<VendorViewModel> GettblVendorCreations()
@@ -90,8 +92,16 @@ namespace AssetManagementSystemWebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.tblVendorCreations.Add(tblVendorCreation);
-            db.SaveChanges();
+			try
+			{
+				db.tblVendorCreations.Add(tblVendorCreation);
+				db.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				Log.Debug(ex.Message);
+				throw;
+			}
 
             return CreatedAtRoute("DefaultApi", new { id = tblVendorCreation.vd_id }, tblVendorCreation);
         }

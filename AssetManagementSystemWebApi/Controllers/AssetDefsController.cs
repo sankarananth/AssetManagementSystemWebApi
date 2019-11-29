@@ -8,13 +8,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using log4net;
 using AssetManagementSystemWebApi.Models;
 
 namespace AssetManagementSystemWebApi.Controllers
 {
     public class AssetDefsController : ApiController
     {
-        private assetDBEntities db = new assetDBEntities();
+		private static readonly ILog Log = LogManager.GetLogger(typeof(AssetDefsController));
+		private assetDBEntities db = new assetDBEntities();
 
 		// GET: api/AssetDefs
 		public List<AssetDefinitionViewModel> GetAssetDefs()
@@ -31,9 +33,18 @@ namespace AssetManagementSystemWebApi.Controllers
 		}
 		public int Get(string name)
 		{
-			List<tblAssetDef> aslist = db.tblAssetDefs.Where(x => x.ad_name.Contains(name)).ToList();
-			int count = aslist.Count;
-			return count;
+			try
+			{
+				List<tblAssetDef> aslist = db.tblAssetDefs.Where(x => x.ad_name.Contains(name)).ToList();
+				int count = aslist.Count;
+				return count;
+			}
+			catch (Exception ex)
+			{
+				Log.Debug(ex.Message);
+				return 0;
+			}
+			
 		}
 
 		// GET: api/AssetDefs/5
@@ -88,14 +99,20 @@ namespace AssetManagementSystemWebApi.Controllers
         [ResponseType(typeof(tblAssetDef))]
         public IHttpActionResult PosttblAssetDef(tblAssetDef tblAssetDef)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			try
+			{
+				if (!ModelState.IsValid)
+				{
+					return BadRequest(ModelState);
+				}
 
-            db.tblAssetDefs.Add(tblAssetDef);
-            db.SaveChanges();
-
+				db.tblAssetDefs.Add(tblAssetDef);
+				db.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				Log.Debug(ex.Message);
+			}
             return CreatedAtRoute("DefaultApi", new { id = tblAssetDef.ad_id }, tblAssetDef);
         }
 

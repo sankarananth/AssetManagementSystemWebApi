@@ -8,18 +8,25 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using log4net;
 using AssetManagementSystemWebApi.Models;
 
 namespace AssetManagementSystemWebApi.Controllers
 {
     public class PurchaseController : ApiController
     {
-        private assetDBEntities db = new assetDBEntities();
+		private static readonly ILog Log = LogManager.GetLogger(typeof(PurchaseController));
+		private assetDBEntities db = new assetDBEntities();
 
-        // GET: api/Purchase
-        public List<PurchaseViewModel> GettblPurchaseOrders()
+		public PurchaseController()
+		{
+			db.Configuration.ProxyCreationEnabled = false;
+		}
+		// GET: api/Purchase
+		public List<PurchaseViewModel> GettblPurchaseOrders()
         {
-			List<tblPurchaseOrder> purchaseList = db.tblPurchaseOrders.ToList();
+			db.Configuration.ProxyCreationEnabled = true;
+			List<tblPurchaseOrder> purchaseList = db.tblPurchaseOrders.Where(x=>x.pd_status== "Purchase Order raised" || x.pd_status== "Registered Internally").ToList();
 			List<PurchaseViewModel> pvmList = purchaseList.Select(x => new PurchaseViewModel
 			{
 				purchaseId = Convert.ToInt32(x.pd_id),
@@ -28,28 +35,35 @@ namespace AssetManagementSystemWebApi.Controllers
 				purchaseOrderNo = x.pd_orderno,
 				vendorName = x.tblVendorCreation.vd_name,
 				orderDate = x.pd_odate.ToString("dd/MM/yyyy"),
-				deliveryDate=x.pd_ddate.ToString("dd/MM/yyyy"),
-				purchaseQuantity=Convert.ToInt32(x.pd_qty),
+				deliveryDate=x.pd_ddate.ToString(),
+				purchaseQuantity =Convert.ToInt32(x.pd_qty),
 				purchaseStatus=x.pd_status
 			}).ToList();
             return pvmList;
         }
-		public void Get(string name)
+		public List<tblAssetType> Get(string name)
 		{
+			try
+			{
+				tblAssetDef adef = db.tblAssetDefs.Where(x => x.ad_name == name).FirstOrDefault();
+				List<tblAssetType> typeList = db.tblAssetTypes.Where(x => x.at_id == adef.ad_type_id).ToList();
+				return typeList;
+			}
+			catch (Exception ex)
+			{
+				Log.Debug(ex.Message);
+				List<tblAssetType> list = new List<tblAssetType>();
+				return list;
+			}
 			
 		}
 
         // GET: api/Purchase/5
         [ResponseType(typeof(tblPurchaseOrder))]
-        public IHttpActionResult GettblPurchaseOrder(decimal id)
+        public List<tblVendorCreation> GettblPurchaseOrder(int id)
         {
-            tblPurchaseOrder tblPurchaseOrder = db.tblPurchaseOrders.Find(id);
-            if (tblPurchaseOrder == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(tblPurchaseOrder);
+			List<tblVendorCreation> vendorList = db.tblVendorCreations.Where(x => x.vd_type_id == id).ToList();
+			return vendorList;
         }
 
         // PUT: api/Purchase/5
@@ -96,15 +110,23 @@ namespace AssetManagementSystemWebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.tblPurchaseOrders.Add(tblPurchaseOrder);
-            db.SaveChanges();
+			try
+			{
+				db.tblPurchaseOrders.Add(tblPurchaseOrder);
+				db.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				Log.Debug(ex.Message);
+				throw;
+			}
 
             return CreatedAtRoute("DefaultApi", new { id = tblPurchaseOrder.pd_id }, tblPurchaseOrder);
         }
 
         // DELETE: api/Purchase/5
         [ResponseType(typeof(tblPurchaseOrder))]
-        public IHttpActionResult DeletetblPurchaseOrder(decimal id)
+        public IHttpActionResult DeletetblPurchaseOrder(int id)
         {
             tblPurchaseOrder tblPurchaseOrder = db.tblPurchaseOrders.Find(id);
             if (tblPurchaseOrder == null)
