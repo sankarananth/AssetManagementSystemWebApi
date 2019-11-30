@@ -25,8 +25,9 @@ namespace AssetManagementSystemWebApi.Models
         public string ad_name { get; set; }
         public Nullable<decimal> ad_type_id { get; set; }
 		public string ad_class { get; set; }
-    
-        public virtual tblAssetType tblAssetType { get; set; }
+		
+
+		public virtual tblAssetType tblAssetType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblAssetMaster> tblAssetMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
